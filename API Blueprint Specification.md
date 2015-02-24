@@ -754,7 +754,7 @@ The payload defined in this section **may** be referenced in any response or req
 <a name="def-uriparameters-section"></a>
 ## 13. URI parameters section
 - **Parent Sections:** [Resource section](#def-resource-section) | [Action section](#def-action-section)
-- **Nested Sections:** none
+- **Nested Sections:** See **[Markdown Syntax for Object Notation][MSON]**
 - **Markdown entity:** list
 - **Inherits from**: none, special
 
@@ -766,30 +766,9 @@ Defined by the `Parameters` keyword written in a Markdown list item:
 #### Description
 Discussion of URI parameters in the _scope of the parent section_.
 
-This section **must** be composed of nested list items only. This section **must not** contain any other elements. One list item per URI parameter. The nested list items subsections inherit from the [Named section](#def-named-section) and are subject to additional formatting as follows:
+This section **must** be composed of nested list items only. This section **must not** contain any other elements. Each of the list item describes a single URI parameter using the **[Markdown Syntax for Object Notation][MSON] (MSON)**.
 
-    + <parameter name> = `<default value>` (required | optional , <type>, `<example value>`) ... <description>
-
-        <additional description>
-
-        + Values
-            + `<enumeration element 1>`
-            + `<enumeration element 2>`
-            ...
-            + `<enumeration element N>`
-
-Where:
-
-* `<parameter name>` is the parameter name as written in [Resource Section](#ResourceSection)'s URI (e.g. "id").
-* `<description>` is any **optional** Markdown-formatted description of the parameter.
-* `<additional description>` is any additional **optional** Markdown-formatted [description](#SectionDescription) of the parameter.
-* `<default value>` is an **optional** default value of the parameter – a value that is used when no value is explicitly set (optional parameters only).
-* `<example value>` is an **optional** example value of the parameter (e.g. `1234`).
-* `<type>` is the **optional** parameter type as expected by the API (e.g. "number").
-* `Values` is the **optional** enumeration of possible values
-*  and `<enumeration element n>` represents an element of enumeration type.
-* `required` is the **optional** specifier of a required parameter (this is the **default**)
-* `optional` is the **optional** specifier of an optional parameter.
+The property name in the list item for a paramter should be the parameter name as written in [Resource Section](#ResourceSection)'s URI (e.g. "id").
 
 > **NOTE:** This section **should only** contain parameters that are specified in the parent's resource URI template, and does not have to list every URI parameter.
 
@@ -801,32 +780,35 @@ Where:
 
 ```
 + Parameters
-    + id ... Id of a post.
+    + id - Id of a post.
 ```
 
 ```
 + Parameters
-    + id (number) ... Id of a post.
+    + id (number) - Id of a post.
 ```
 
 ```
 + Parameters
-    + id (required, number, `1001`) ... Id of a post.
+    + id: `1001` (number, required) - Id of a post.
 ```
 
 ```
 + Parameters
-    + id = `20` (optional, number, `1001`) ... Id of a post.
+    + id: `1001` (number) - Id of a post.
+        + Default: `20`
 ```
+
+You can give an enumeration of possible values using [MSON][] as shown below:
 
 ```
 + Parameters
-    + id (string)
+    + id (enum[string])
 
         Id of a Post
 
-        + Values
-            + `A`
+        + Members
+            + `A` - First introduction post
             + `B`
             + `C`
 ```
@@ -872,7 +854,7 @@ Multiple Request and Response nested sections within one transaction example **s
     Retrieves the list of **ACME Blog** posts.
 
     + Parameters
-        + limit (optional, number) ... Maximum number of posts to retrieve
+        + limit (number) - Maximum number of posts to retrieve
 
     + Response 200
 
